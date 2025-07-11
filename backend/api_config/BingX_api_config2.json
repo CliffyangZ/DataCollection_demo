@@ -13,9 +13,9 @@
         "type": "timescaledb",
         "host": "timescaledb",
         "port": 5432,
-        "database": "crypto_data",
+        "database": "",
         "user": "postgres",
-        "password": "kevin0130"
+        "password": ""
     },
     "trading_pairs": [
         "BTC-USDT",
