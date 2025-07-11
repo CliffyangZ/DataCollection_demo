@@ -2,6 +2,9 @@
 
 ## 項目概述
 這個項目為加密貨幣交易系統的數據收集過程提供了一個可視化介面，使用Vue.js實現前端，Flask實現後端API。通過這個介面，您可以：
+<img width="1895" height="919" alt="截圖 2025-07-11 下午5 45 52" src="https://github.com/user-attachments/assets/f5bbdea1-9854-42f2-95d6-31b85a070397" />
+<img width="1916" height="882" alt="截圖 2025-07-11 下午5 46 01" src="https://github.com/user-attachments/assets/8a25d0ff-9392-40ea-8daa-9477f900d65f" />
+
 
 1. 啟動和監控數據收集任務
 2. 實時查看收集進度和統計數據
