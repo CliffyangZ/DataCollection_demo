@@ -1,0 +1,20 @@
+2025-07-05 22:25:52,921 - data_collector - INFO - 開始執行數據收集腳本
+2025-07-05 22:25:52,921 - data_collector - INFO - 參數信息: symbol=ETH-USDT, 開始時間=2022-01-01, 結束時間=2025-07-05
+2025-07-05 22:25:52,921 - data_collector - INFO - 配置文件路徑: /Users/cliffyang/Documents/Program/Crypto_Trading_Bot/TradingModel_V3/backend/api_config/BingX_api_config2_local.json
+2025-07-05 22:25:52,921 - data_collector - INFO - 配置文件是否存在: True
+2025-07-05 22:25:53,047 - data_collector - INFO - 使用配置文件: /Users/cliffyang/Documents/Program/Crypto_Trading_Bot/TradingModel_V3/backend/api_config/BingX_api_config2_local.json
+2025-07-05 22:25:53,047 - data_collector - INFO - 使用交易所: BingX
+2025-07-05 22:25:53,047 - data_collector - INFO - 開始收集 ETH-USDT 的 1d K線數據
+2025-07-05 22:25:53,047 - data_collector - INFO - 時間範圍: 2022-01-01 00:00:00 至 2025-07-05 23:59:59
+2025-07-05 22:25:53,047 - data_collector - INFO - 預計需要收集約 1281 條K線數據
+2025-07-05 22:25:53,047 - data_collector - INFO - 收集批次 1: 2022-01-01 00:00:00 至 2024-09-27 00:00:00
+2025-07-05 22:25:53,532 - data_collector - INFO - 成功插入 997 條K線數據
+2025-07-05 22:25:53,532 - data_collector - INFO - 休眠 1 秒...
+2025-07-05 22:25:54,536 - data_collector - INFO - 總進度: 78.03% 已收集: 997 條
+2025-07-05 22:25:54,536 - data_collector - INFO - 收集批次 2: 2024-09-27 08:00:00 至 2025-07-05 23:59:59
+2025-07-05 22:25:54,822 - data_collector - INFO - 成功插入 282 條K線數據
+2025-07-05 22:25:54,822 - data_collector - INFO - 休眠 1 秒...
+2025-07-05 22:25:55,826 - data_collector - INFO - 總進度: 100.00% 已收集: 1279 條
+2025-07-05 22:25:55,827 - data_collector - INFO - 數據收集完成! 總共收集了 1279 條 ETH-USDT 的 1d K線數據
+2025-07-05 22:25:55,829 - data_collector - INFO - 數據收集完成
+2025-07-05 22:25:55,829 - data_collector - INFO - 腳本執行成功

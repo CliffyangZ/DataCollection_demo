@@ -1,0 +1,28 @@
+# 核心依賴
+asyncio==3.4.3
+asyncpg==0.29.0
+pandas==2.1.1
+numpy==1.26.0
+
+# API 和 Web 服務
+fastapi==0.104.1
+uvicorn==0.23.2
+websockets==12.0
+httpx==0.25.0
+
+# 數據處理
+python-dateutil==2.8.2
+pytz==2023.3.post1
+
+# 工具
+python-dotenv==1.0.0
+pydantic==2.4.2
+ujson==5.8.0
+
+# 日誌與監控
+structlog==23.2.0
+prometheus-client==0.17.1
+
+# 測試工具
+pytest==7.4.2
+pytest-asyncio==0.21.1

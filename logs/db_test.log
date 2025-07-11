@@ -1,0 +1,12 @@
+2025-07-05 17:59:45,189 - db_tester - INFO - 測試配置文件: /Users/cliffyang/Documents/Program/Crypto_Trading_Bot/TradingModel_V3/backend/api_config/BingX_api_config2.json
+2025-07-05 17:59:45,190 - db_tester - INFO - 配置文件讀取成功
+2025-07-05 17:59:45,190 - db_tester - INFO - 配置文件驗證通過
+2025-07-05 17:59:45,190 - db_tester - INFO - 測試數據庫連接: timescaledb:5432/crypto_data
+2025-07-05 17:59:45,190 - db_tester - INFO - 連接字符串: host=timescaledb port=5432 dbname=crypto_data user=postgres
+2025-07-05 17:59:45,193 - db_tester - ERROR - 數據庫連接失敗: could not translate host name "timescaledb" to address: nodename nor servname provided, or not known
+
+2025-07-05 17:59:45,194 - db_tester - INFO - 嘗試使用localhost作為數據庫主機
+2025-07-05 17:59:45,363 - db_tester - INFO - 使用localhost連接成功，版本: PostgreSQL 14.17 on aarch64-unknown-linux-musl, compiled by gcc (Alpine 13.2.1_git20240309) 13.2.1 20240309, 64-bit
+2025-07-05 17:59:45,363 - db_tester - INFO - 已創建修正後的配置文件: /Users/cliffyang/Documents/Program/Crypto_Trading_Bot/TradingModel_V3/backend/api_config/BingX_api_config2_local.json
+2025-07-05 17:59:45,363 - db_tester - INFO - 請使用修正後的配置文件: /Users/cliffyang/Documents/Program/Crypto_Trading_Bot/TradingModel_V3/backend/api_config/BingX_api_config2_local.json
+2025-07-05 17:59:45,363 - db_tester - INFO - 測試完成

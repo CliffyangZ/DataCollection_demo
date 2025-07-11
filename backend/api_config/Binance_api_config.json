@@ -1,0 +1,19 @@
+{
+  "exchange_configs": [
+    {
+      "exchange_name": "Binance",
+      "api_info": {
+        "api_url": "https://api.binance.com",
+        "api_key": "your_binance_api_key_here",
+        "secret_key": "your_binance_secret_key_here"
+      }
+    }
+  ],
+  "database": {
+    "host": "timescaledb",
+    "port": 5432,
+    "database": "trading_data",
+    "user": "postgres",
+    "password": "postgres"
+  }
+}

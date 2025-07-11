@@ -1,0 +1,128 @@
+2025-07-02 17:51:20,725 - backend.services.data_tools.import_to_database - INFO - 數據庫連接成功
+2025-07-02 17:51:20,743 - backend.services.data_tools.import_to_database - INFO - 數據表創建/檢查完成
+2025-07-02 17:51:20,743 - backend.services.data_tools.import_to_database - INFO - K線數據管道初始化完成
+2025-07-02 17:51:20,744 - data_collector - INFO - 開始收集 BTC-USDT 的 1h K線數據
+2025-07-02 17:51:20,744 - data_collector - INFO - 時間範圍: 2025-01-01 00:00:00 至 2025-07-02 23:59:59
+2025-07-02 17:51:20,744 - data_collector - INFO - 預計需要收集約 4391 條K線數據
+2025-07-02 17:51:20,744 - data_collector - INFO - 收集批次 1: 2025-01-01 00:00:00 至 2025-02-11 16:00:00
+2025-07-02 17:51:20,744 - backend.services.data_tools.import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-02 17:51:21,096 - backend.services.data_tools.import_to_database - INFO - 成功獲取 1000 條K線數據: BTC-USDT
+2025-07-02 17:51:21,407 - backend.services.data_tools.import_to_database - INFO - 成功插入 1000 條K線數據
+2025-07-02 17:51:21,407 - data_collector - INFO - 成功插入 1000 條K線數據
+2025-07-02 17:51:21,408 - data_collector - INFO - 休眠 1 秒...
+2025-07-02 17:51:22,413 - data_collector - INFO - 總進度: 22.77% 已收集: 1000 條
+2025-07-02 17:51:22,414 - data_collector - INFO - 收集批次 2: 2025-02-11 16:00:00 至 2025-03-25 08:00:00
+2025-07-02 17:51:22,414 - backend.services.data_tools.import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-02 17:51:22,605 - backend.services.data_tools.import_to_database - INFO - 成功獲取 1000 條K線數據: BTC-USDT
+2025-07-02 17:51:22,788 - backend.services.data_tools.import_to_database - INFO - 成功插入 1000 條K線數據
+2025-07-02 17:51:22,788 - data_collector - INFO - 成功插入 1000 條K線數據
+2025-07-02 17:51:22,789 - data_collector - INFO - 休眠 1 秒...
+2025-07-02 17:51:23,792 - data_collector - INFO - 總進度: 45.54% 已收集: 2000 條
+2025-07-02 17:51:23,793 - data_collector - INFO - 收集批次 3: 2025-03-25 08:00:00 至 2025-05-06 00:00:00
+2025-07-02 17:51:23,793 - backend.services.data_tools.import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-02 17:51:23,980 - backend.services.data_tools.import_to_database - INFO - 成功獲取 1000 條K線數據: BTC-USDT
+2025-07-02 17:51:24,136 - backend.services.data_tools.import_to_database - INFO - 成功插入 1000 條K線數據
+2025-07-02 17:51:24,136 - data_collector - INFO - 成功插入 1000 條K線數據
+2025-07-02 17:51:24,136 - data_collector - INFO - 休眠 1 秒...
+2025-07-02 17:51:25,137 - data_collector - INFO - 總進度: 68.31% 已收集: 3000 條
+2025-07-02 17:51:25,138 - data_collector - INFO - 收集批次 4: 2025-05-06 00:00:00 至 2025-06-16 16:00:00
+2025-07-02 17:51:25,138 - backend.services.data_tools.import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-02 17:51:25,314 - backend.services.data_tools.import_to_database - INFO - 成功獲取 1000 條K線數據: BTC-USDT
+2025-07-02 17:51:25,452 - backend.services.data_tools.import_to_database - INFO - 成功插入 1000 條K線數據
+2025-07-02 17:51:25,452 - data_collector - INFO - 成功插入 1000 條K線數據
+2025-07-02 17:51:25,453 - data_collector - INFO - 休眠 1 秒...
+2025-07-02 17:51:26,455 - data_collector - INFO - 總進度: 91.07% 已收集: 4000 條
+2025-07-02 17:51:26,456 - data_collector - INFO - 收集批次 5: 2025-06-16 16:00:00 至 2025-07-02 23:59:59
+2025-07-02 17:51:26,456 - backend.services.data_tools.import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-02 17:51:26,629 - backend.services.data_tools.import_to_database - INFO - 成功獲取 386 條K線數據: BTC-USDT
+2025-07-02 17:51:26,690 - backend.services.data_tools.import_to_database - INFO - 成功插入 386 條K線數據
+2025-07-02 17:51:26,690 - data_collector - INFO - 成功插入 386 條K線數據
+2025-07-02 17:51:26,690 - data_collector - INFO - 休眠 1 秒...
+2025-07-02 17:51:27,695 - data_collector - INFO - 總進度: 99.86% 已收集: 4386 條
+2025-07-02 17:51:27,695 - data_collector - INFO - 收集批次 6: 2025-07-02 18:00:00 至 2025-07-02 23:59:59
+2025-07-02 17:51:27,695 - backend.services.data_tools.import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-02 17:51:27,853 - backend.services.data_tools.import_to_database - INFO - 成功獲取 0 條K線數據: BTC-USDT
+2025-07-02 17:51:27,855 - data_collector - WARNING - 該時間段沒有獲取到有效數據: 2025-07-02 18:00:00 至 2025-07-02 23:59:59
+2025-07-02 17:51:27,855 - data_collector - INFO - 休眠 1 秒...
+2025-07-02 17:51:28,859 - data_collector - INFO - 總進度: 100.00% 已收集: 4386 條
+2025-07-02 17:51:28,860 - data_collector - INFO - 數據收集完成! 總共收集了 4386 條 BTC-USDT 的 1h K線數據
+2025-07-02 17:51:28,863 - data_collector - INFO - 腳本執行成功
+2025-07-02 18:01:06,011 - backend.services.data_tools.import_to_database - INFO - 數據庫連接成功
+2025-07-02 18:01:06,032 - backend.services.data_tools.import_to_database - INFO - 數據表創建/檢查完成
+2025-07-02 18:01:06,032 - backend.services.data_tools.import_to_database - INFO - K線數據管道初始化完成
+2025-07-02 18:01:06,032 - data_collector - INFO - 開始收集 BTC-USDT 的 1h K線數據
+2025-07-02 18:01:06,032 - data_collector - INFO - 時間範圍: 2025-01-01 00:00:00 至 2025-05-21 23:59:59
+2025-07-02 18:01:06,032 - data_collector - INFO - 預計需要收集約 3383 條K線數據
+2025-07-02 18:01:06,032 - data_collector - INFO - 收集批次 1: 2025-01-01 00:00:00 至 2025-02-11 16:00:00
+2025-07-02 18:01:06,032 - backend.services.data_tools.import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-02 18:01:06,495 - backend.services.data_tools.import_to_database - INFO - 成功獲取 1000 條K線數據: BTC-USDT
+2025-07-02 18:01:06,680 - backend.services.data_tools.import_to_database - INFO - 成功插入 1000 條K線數據
+2025-07-02 18:01:06,681 - data_collector - INFO - 成功插入 1000 條K線數據
+2025-07-02 18:01:06,681 - data_collector - INFO - 休眠 1 秒...
+2025-07-02 18:01:07,686 - data_collector - INFO - 總進度: 29.55% 已收集: 1000 條
+2025-07-02 18:01:07,687 - data_collector - INFO - 收集批次 2: 2025-02-11 16:00:00 至 2025-03-25 08:00:00
+2025-07-02 18:01:07,688 - backend.services.data_tools.import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-02 18:01:07,937 - backend.services.data_tools.import_to_database - INFO - 成功獲取 1000 條K線數據: BTC-USDT
+2025-07-02 18:01:08,072 - backend.services.data_tools.import_to_database - INFO - 成功插入 1000 條K線數據
+2025-07-02 18:01:08,072 - data_collector - INFO - 成功插入 1000 條K線數據
+2025-07-02 18:01:08,073 - data_collector - INFO - 休眠 1 秒...
+2025-07-02 18:01:09,078 - data_collector - INFO - 總進度: 59.10% 已收集: 2000 條
+2025-07-02 18:01:09,079 - data_collector - INFO - 收集批次 3: 2025-03-25 08:00:00 至 2025-05-06 00:00:00
+2025-07-02 18:01:09,079 - backend.services.data_tools.import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-02 18:01:09,241 - backend.services.data_tools.import_to_database - INFO - 成功獲取 1000 條K線數據: BTC-USDT
+2025-07-02 18:01:09,355 - backend.services.data_tools.import_to_database - INFO - 成功插入 1000 條K線數據
+2025-07-02 18:01:09,355 - data_collector - INFO - 成功插入 1000 條K線數據
+2025-07-02 18:01:09,355 - data_collector - INFO - 休眠 1 秒...
+2025-07-02 18:01:10,358 - data_collector - INFO - 總進度: 88.65% 已收集: 3000 條
+2025-07-02 18:01:10,361 - data_collector - INFO - 收集批次 4: 2025-05-06 00:00:00 至 2025-05-21 23:59:59
+2025-07-02 18:01:10,362 - backend.services.data_tools.import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-02 18:01:10,524 - backend.services.data_tools.import_to_database - INFO - 成功獲取 384 條K線數據: BTC-USDT
+2025-07-02 18:01:10,624 - backend.services.data_tools.import_to_database - INFO - 成功插入 384 條K線數據
+2025-07-02 18:01:10,624 - data_collector - INFO - 成功插入 384 條K線數據
+2025-07-02 18:01:10,625 - data_collector - INFO - 休眠 1 秒...
+2025-07-02 18:01:11,626 - data_collector - INFO - 總進度: 100.00% 已收集: 3384 條
+2025-07-02 18:01:11,627 - data_collector - INFO - 數據收集完成! 總共收集了 3384 條 BTC-USDT 的 1h K線數據
+2025-07-02 18:01:11,628 - data_collector - INFO - 腳本執行成功
+2025-07-05 14:31:26,410 - backend.services.data_tools.import_to_database - INFO - 數據庫連接成功
+2025-07-05 14:31:26,464 - backend.services.data_tools.import_to_database - INFO - 數據表創建/檢查完成
+2025-07-05 14:31:26,464 - backend.services.data_tools.import_to_database - INFO - K線數據管道初始化完成
+2025-07-05 14:31:26,464 - data_collector - INFO - 開始收集 BTC-USDT 的 1h K線數據
+2025-07-05 14:31:26,464 - data_collector - INFO - 時間範圍: 2025-01-01 00:00:00 至 2025-07-02 23:59:59
+2025-07-05 14:31:26,464 - data_collector - INFO - 預計需要收集約 4391 條K線數據
+2025-07-05 14:31:26,464 - data_collector - INFO - 收集批次 1: 2025-01-01 00:00:00 至 2025-02-11 16:00:00
+2025-07-05 14:31:26,464 - backend.services.data_tools.import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-05 14:31:26,947 - backend.services.data_tools.import_to_database - INFO - 成功獲取 1000 條K線數據: BTC-USDT
+2025-07-05 14:31:27,381 - backend.services.data_tools.import_to_database - INFO - 成功插入 1000 條K線數據
+2025-07-05 14:31:27,384 - data_collector - INFO - 成功插入 1000 條K線數據
+2025-07-05 14:31:27,385 - data_collector - INFO - 休眠 1 秒...
+2025-07-05 14:31:28,387 - data_collector - INFO - 總進度: 22.77% 已收集: 1000 條
+2025-07-05 14:31:28,391 - data_collector - INFO - 收集批次 2: 2025-02-11 16:00:00 至 2025-03-25 08:00:00
+2025-07-05 14:31:28,391 - backend.services.data_tools.import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-05 14:31:28,580 - backend.services.data_tools.import_to_database - INFO - 成功獲取 1000 條K線數據: BTC-USDT
+2025-07-05 14:31:28,740 - backend.services.data_tools.import_to_database - INFO - 成功插入 1000 條K線數據
+2025-07-05 14:31:28,741 - data_collector - INFO - 成功插入 1000 條K線數據
+2025-07-05 14:31:28,742 - data_collector - INFO - 休眠 1 秒...
+2025-07-05 14:31:29,747 - data_collector - INFO - 總進度: 45.54% 已收集: 2000 條
+2025-07-05 14:31:29,748 - data_collector - INFO - 收集批次 3: 2025-03-25 08:00:00 至 2025-05-06 00:00:00
+2025-07-05 14:31:29,749 - backend.services.data_tools.import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-05 14:31:29,940 - backend.services.data_tools.import_to_database - INFO - 成功獲取 1000 條K線數據: BTC-USDT
+2025-07-05 14:31:30,097 - backend.services.data_tools.import_to_database - INFO - 成功插入 1000 條K線數據
+2025-07-05 14:31:30,097 - data_collector - INFO - 成功插入 1000 條K線數據
+2025-07-05 14:31:30,098 - data_collector - INFO - 休眠 1 秒...
+2025-07-05 14:31:31,101 - data_collector - INFO - 總進度: 68.31% 已收集: 3000 條
+2025-07-05 14:31:31,101 - data_collector - INFO - 收集批次 4: 2025-05-06 00:00:00 至 2025-06-16 16:00:00
+2025-07-05 14:31:31,102 - backend.services.data_tools.import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-05 14:31:31,286 - backend.services.data_tools.import_to_database - INFO - 成功獲取 1000 條K線數據: BTC-USDT
+2025-07-05 14:31:31,486 - backend.services.data_tools.import_to_database - INFO - 成功插入 1000 條K線數據
+2025-07-05 14:31:31,486 - data_collector - INFO - 成功插入 1000 條K線數據
+2025-07-05 14:31:31,486 - data_collector - INFO - 休眠 1 秒...
+2025-07-05 14:31:32,492 - data_collector - INFO - 總進度: 91.07% 已收集: 4000 條
+2025-07-05 14:31:32,492 - data_collector - INFO - 收集批次 5: 2025-06-16 16:00:00 至 2025-07-02 23:59:59
+2025-07-05 14:31:32,493 - backend.services.data_tools.import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-05 14:31:32,658 - backend.services.data_tools.import_to_database - INFO - 成功獲取 392 條K線數據: BTC-USDT
+2025-07-05 14:31:32,763 - backend.services.data_tools.import_to_database - INFO - 成功插入 392 條K線數據
+2025-07-05 14:31:32,763 - data_collector - INFO - 成功插入 392 條K線數據
+2025-07-05 14:31:32,763 - data_collector - INFO - 休眠 1 秒...
+2025-07-05 14:31:33,769 - data_collector - INFO - 總進度: 100.00% 已收集: 4392 條
+2025-07-05 14:31:33,769 - data_collector - INFO - 數據收集完成! 總共收集了 4392 條 BTC-USDT 的 1h K線數據
+2025-07-05 14:31:33,770 - data_collector - INFO - 腳本執行成功

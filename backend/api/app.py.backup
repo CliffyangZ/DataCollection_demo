@@ -1,0 +1,869 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+數據收集API服務
+提供RESTful API接口，用於控制和監控數據收集過程
+"""
+
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+import subprocess
+import threading
+import time
+import json
+import os
+import logging
+import sys
+from datetime import datetime, timedelta
+import re
+import psycopg2
+import random
+import pandas as pd
+from dotenv import load_dotenv
+
+# 添加項目根目錄到系統路徑，以便正確導入模塊
+script_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.abspath(os.path.join(script_dir, '../..'))
+
+# 記錄專案根目錄以依調試
+app.logger.info(f"專案根目錄: {project_root}")
+sys.path.insert(0, project_root)
+
+# 設置日誌
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler("data_collection_api.log"),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger("data_collection_api")
+
+app = Flask(__name__)
+CORS(app)  # 啟用跨域資源共享
+
+# 全局變量，用於存儲收集進程的狀態
+collection_process = None
+collection_status = {
+    "isCollecting": False,
+    "symbol": "",
+    "interval": "",
+    "startTime": "",
+    "endTime": "",
+    "totalKlines": 0,
+    "collectedKlines": 0,
+    "progress": 0,
+    "batchCount": 0,
+    "currentBatch": {
+        "startTime": "",
+        "endTime": "",
+        "count": 0
+    },
+    "collectionHistory": [],
+    "error": None
+}
+
+# 用於監控日誌文件的線程
+log_monitor_thread = None
+should_stop_monitoring = False
+
+def parse_log_line(line):
+    """解析日誌行，提取相關信息"""
+    try:
+        # 提取時間戳和消息部分
+        timestamp_match = re.match(r'^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3})', line)
+        if not timestamp_match:
+            return None
+            
+        # 提取批次信息
+        batch_match = re.search(r'收集批次 (\d+): ([\d-]+ [\d:]+) 至 ([\d-]+ [\d:]+)', line)
+        if batch_match:
+            return {
+                "type": "batch_info",
+                "batchCount": int(batch_match.group(1)),
+                "startTime": batch_match.group(2),
+                "endTime": batch_match.group(3)
+            }
+            
+        # 提取插入數據信息
+        insert_match = re.search(r'成功插入 (\d+) 條K線數據', line)
+        if insert_match:
+            return {
+                "type": "insert_info",
+                "count": int(insert_match.group(1))
+            }
+            
+        # 提取進度信息
+        progress_match = re.search(r'總進度: ([\d.]+)% 已收集: (\d+) 條', line)
+        if progress_match:
+            return {
+                "type": "progress_info",
+                "progress": float(progress_match.group(1)),
+                "totalCollected": int(progress_match.group(2))
+            }
+            
+        # 提取完成信息
+        complete_match = re.search(r'數據收集完成! 總共收集了 (\d+) 條', line)
+        if complete_match:
+            return {
+                "type": "complete_info",
+                "totalCollected": int(complete_match.group(1))
+            }
+            
+        # 提取錯誤信息
+        error_match = re.search(r'錯誤: (.+)', line)
+        if error_match:
+            return {
+                "type": "error_info",
+                "message": error_match.group(1)
+            }
+            
+        return None
+    except Exception as e:
+        logger.error(f"解析日誌行時出錯: {str(e)}")
+        return None
+
+def monitor_log_file(log_file_path):
+    """監控日誌文件並更新收集狀態"""
+    global collection_status, should_stop_monitoring
+    
+    try:
+        with open(log_file_path, 'r') as f:
+            # 移動到文件末尾
+            f.seek(0, 2)
+            
+            while not should_stop_monitoring:
+                line = f.readline()
+                if line:
+                    parsed_data = parse_log_line(line)
+                    if parsed_data:
+                        update_collection_status(parsed_data)
+                else:
+                    # 沒有新行，等待一下
+                    time.sleep(0.1)
+                    
+                # 檢查進程是否還在運行
+                if collection_process and collection_process.poll() is not None:
+                    # 進程已結束
+                    if collection_status["isCollecting"]:
+                        logger.info("數據收集進程已結束")
+                        collection_status["isCollecting"] = False
+                        if collection_status["progress"] < 100 and not collection_status["error"]:
+                            collection_status["progress"] = 100  # 標記為完成
+                    break
+    except Exception as e:
+        logger.error(f"監控日誌文件時出錯: {str(e)}")
+        collection_status["error"] = str(e)
+    finally:
+        logger.info("停止監控日誌文件")
+
+def update_collection_status(parsed_data):
+    """根據解析的日誌數據更新收集狀態"""
+    global collection_status
+    
+    if parsed_data["type"] == "batch_info":
+        collection_status["batchCount"] = parsed_data["batchCount"]
+        collection_status["currentBatch"]["startTime"] = parsed_data["startTime"]
+        collection_status["currentBatch"]["endTime"] = parsed_data["endTime"]
+        
+    elif parsed_data["type"] == "insert_info":
+        collection_status["currentBatch"]["count"] = parsed_data["count"]
+        collection_status["collectedKlines"] += parsed_data["count"]
+        
+        # 添加到歷史記錄
+        collection_status["collectionHistory"].append({
+            "timestamp": datetime.now().isoformat(),
+            "count": parsed_data["count"],
+            "progress": collection_status["progress"]
+        })
+        
+        # 保持歷史記錄在合理大小
+        if len(collection_status["collectionHistory"]) > 100:
+            collection_status["collectionHistory"] = collection_status["collectionHistory"][-100:]
+        
+    elif parsed_data["type"] == "progress_info":
+        collection_status["progress"] = parsed_data["progress"]
+        collection_status["collectedKlines"] = parsed_data["totalCollected"]
+        
+    elif parsed_data["type"] == "complete_info":
+        collection_status["collectedKlines"] = parsed_data["totalCollected"]
+        collection_status["progress"] = 100
+        collection_status["isCollecting"] = False
+        
+    elif parsed_data["type"] == "error_info":
+        collection_status["error"] = parsed_data["message"]
+
+@app.route('/api/data-collection/start', methods=['POST'])
+def start_collection():
+    """啟動數據收集任務"""
+    global collection_process, collection_status, log_monitor_thread, should_stop_monitoring
+    
+    if collection_status["isCollecting"]:
+        return jsonify({
+            "success": False,
+            "message": "已有數據收集任務正在運行"
+        }), 400
+    
+    try:
+        # 輸出原始請求數據以進行調試
+        app.logger.info(f"收到數據收集請求: {request.data}")
+        
+        # 檢查請求格式
+        if not request.is_json:
+            app.logger.error("請求格式錯誤: 不是有效的JSON格式")
+            return jsonify({
+                "success": False,
+                "message": "請求格式錯誤: 不是有效的JSON格式"
+            }), 400
+            
+        data = request.json
+        app.logger.info(f"解析的JSON數據: {data}")
+        
+        symbol = data.get('symbol')
+        start_time = data.get('startTime')
+        end_time = data.get('endTime', '')
+        interval = data.get('interval', '1h')
+        batch_size = data.get('batchSize', 1000)
+        config_path = data.get('configPath')
+        sleep_time = data.get('sleepTime', 1)
+        
+        # 詳細記錄每個必要參數
+        app.logger.info(f"參數檢查 - symbol: {symbol}, start_time: {start_time}, config_path: {config_path}")
+        
+        if not symbol or not start_time or not config_path:
+            missing_params = []
+            if not symbol: missing_params.append("symbol")
+            if not start_time: missing_params.append("startTime")
+            if not config_path: missing_params.append("configPath")
+            
+            app.logger.error(f"缺少必要參數: {', '.join(missing_params)}")
+            return jsonify({
+                "success": False,
+                "message": f"缺少必要參數: {', '.join(missing_params)}"
+            }), 400
+        
+        # 構建命令
+        cmd = [
+            "python",
+            os.path.join(project_root, "backend/scripts/data/keep_collecting.py"),
+            "--symbol", symbol,
+            "--start_time", start_time,
+            "--interval", interval,
+            "--batch_size", str(batch_size),
+            "--config_path", config_path,
+            "--sleep_time", str(sleep_time)
+        ]
+        
+        if end_time:
+            cmd.extend(["--end_time", end_time])
+        
+        # 重置狀態
+        collection_status = {
+            "isCollecting": True,
+            "symbol": symbol,
+            "interval": interval,
+            "startTime": start_time,
+            "endTime": end_time,
+            "totalKlines": data.get('estimatedKlines', 0),
+            "collectedKlines": 0,
+            "progress": 0,
+            "batchCount": 0,
+            "currentBatch": {
+                "startTime": "",
+                "endTime": "",
+                "count": 0
+            },
+            "collectionHistory": [],
+            "error": None
+        }
+        
+        # 啟動收集進程
+        log_file_path = os.path.join(project_root, "data_collection.log")
+        with open(log_file_path, 'w') as log_file:  # 清空日誌文件
+            pass
+        
+        logger.info(f"啟動數據收集進程: {' '.join(cmd)}")
+        collection_process = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            bufsize=1
+        )
+        
+        # 啟動日誌監控線程
+        should_stop_monitoring = False
+        log_monitor_thread = threading.Thread(
+            target=monitor_log_file,
+            args=(log_file_path,)
+        )
+        log_monitor_thread.daemon = True
+        log_monitor_thread.start()
+        
+        return jsonify({
+            "success": True,
+            "message": "數據收集任務已啟動",
+            "status": collection_status
+        })
+        
+    except Exception as e:
+        logger.error(f"啟動數據收集任務時出錯: {str(e)}")
+        return jsonify({
+            "success": False,
+            "message": f"啟動數據收集任務時出錯: {str(e)}"
+        }), 500
+
+@app.route('/api/data-collection/stop', methods=['POST'])
+def stop_collection():
+    """停止數據收集任務"""
+    global collection_process, should_stop_monitoring
+    
+    if not collection_status["isCollecting"] or not collection_process:
+        return jsonify({
+            "success": False,
+            "message": "沒有正在運行的數據收集任務"
+        }), 400
+    
+    try:
+        # 終止進程
+        collection_process.terminate()
+        collection_process.wait(timeout=5)
+        
+        # 停止監控線程
+        should_stop_monitoring = True
+        if log_monitor_thread and log_monitor_thread.is_alive():
+            log_monitor_thread.join(timeout=5)
+        
+        collection_status["isCollecting"] = False
+        
+        return jsonify({
+            "success": True,
+            "message": "數據收集任務已停止",
+            "status": collection_status
+        })
+        
+    except Exception as e:
+        logger.error(f"停止數據收集任務時出錯: {str(e)}")
+        return jsonify({
+            "success": False,
+            "message": f"停止數據收集任務時出錯: {str(e)}"
+        }), 500
+
+@app.route('/api/data-collection/status', methods=['GET'])
+def get_status():
+    """獲取數據收集狀態"""
+    return jsonify(collection_status)
+
+@app.route('/api/data-collection/history', methods=['GET'])
+def get_history():
+    """獲取收集歷史"""
+    return jsonify({
+        "history": collection_status["collectionHistory"]
+    })
+
+@app.route('/api/data-collection/symbols', methods=['GET'])
+def get_symbols():
+    """獲取可用的交易對列表"""
+    # 這裡可以從數據庫或配置中獲取可用的交易對
+    # 暫時返回一些示例數據
+    symbols = [
+        "BTC-USDT",
+        "ETH-USDT",
+        "BNB-USDT",
+        "SOL-USDT",
+        "XRP-USDT",
+        "ADA-USDT",
+        "DOGE-USDT",
+        "SHIB-USDT"
+    ]
+    return jsonify(symbols)
+
+@app.route('/api/data-collection/intervals', methods=['GET'])
+def get_intervals():
+    """獲取可用的時間間隔"""
+    intervals = [
+        {"value": "1m", "label": "1分鐘"},
+        {"value": "5m", "label": "5分鐘"},
+        {"value": "15m", "label": "15分鐘"},
+        {"value": "30m", "label": "30分鐘"},
+        {"value": "1h", "label": "1小時"},
+        {"value": "4h", "label": "4小時"},
+        {"value": "1d", "label": "1天"}
+    ]
+    return jsonify(intervals)
+
+@app.route('/api/exchanges', methods=['GET'])
+def get_exchanges():
+    """獲取支持的交易所列表"""
+    exchanges = [
+        {"value": "BingX", "label": "BingX"},
+        {"value": "Binance", "label": "Binance"},
+        {"value": "OKX", "label": "OKX"},
+        {"value": "ByBit", "label": "ByBit"}
+    ]
+    return jsonify(exchanges)
+
+@app.route('/api/exchanges/configs', methods=['GET'])
+def get_exchange_configs():
+    """獲取所有交易所配置文件"""
+    try:
+        config_dir = os.path.join(project_root, 'backend', 'api_config')
+        app.logger.info(f"Looking for config files in: {config_dir}")
+        
+        # 檢查config目錄是否存在
+        if not os.path.exists(config_dir):
+            app.logger.error(f"配置目錄不存在: {config_dir}")
+            app.logger.info(f"項目根目錄: {project_root}")
+            app.logger.info(f"項目根目錄內容: {os.listdir(project_root)}")
+            
+            # 嘗試創建配置目錄
+            try:
+                os.makedirs(config_dir, exist_ok=True)
+                app.logger.info(f"已創建配置目錄: {config_dir}")
+            except Exception as e:
+                app.logger.error(f"創建配置目錄失敗: {str(e)}")
+            
+            # 回傳空數組和錯誤消息
+            return jsonify({
+                "configFiles": [],
+                "message": "配置目錄不存在，已嘗試創建"
+            })
+        
+        # 列出backend目錄內容以幫助調試
+        backend_dir = os.path.join(project_root, 'backend')
+        app.logger.info(f"Backend目錄內容: {os.listdir(backend_dir)}")
+        app.logger.info(f"Config目錄內容: {os.listdir(config_dir)}")
+        
+        # 獲取所有JSON文件
+        config_files = [f for f in os.listdir(config_dir) if f.endswith('.json')]
+        app.logger.info(f"找到的配置文件: {config_files}")
+        
+        # 優先使用_local.json文件
+        local_configs = [f for f in config_files if '_local.json' in f]
+        if local_configs:
+            app.logger.info(f"找到本地配置文件: {local_configs}")
+        
+        configs = []
+        
+        # 如果沒有找到配置文件，返回默認列表
+        if not config_files:
+            app.logger.warning("未找到配置文件，返回默認列表")
+            return jsonify({
+                "configFiles": [
+                    {
+                        "filename": "BingX_api_config2_local.json",
+                        "path": os.path.join(config_dir, "BingX_api_config2_local.json"),
+                        "exchange": "BingX"
+                    },
+                    {
+                        "filename": "Binance_api_config.json",
+                        "path": os.path.join(config_dir, "Binance_api_config.json"),
+                        "exchange": "Binance"
+                    },
+                    {
+                        "filename": "OKX_api_config.json",
+                        "path": os.path.join(config_dir, "OKX_api_config.json"),
+                        "exchange": "OKX"
+                    },
+                    {
+                        "filename": "ByBit_api_config.json",
+                        "path": os.path.join(config_dir, "ByBit_api_config.json"),
+                        "exchange": "ByBit"
+                    }
+                ],
+                "message": "Using default config list"
+            })
+        
+        # 處理每個文件
+        for filename in config_files:
+            file_path = os.path.join(config_dir, filename)
+            exchange_name = ""
+            
+            # 從文件名提取交易所名稱
+            name_parts = filename.split('_')
+            if len(name_parts) > 0:
+                exchange_name = name_parts[0]
+            
+            # 從文件內容中提取交易所名稱
+            try:
+                with open(file_path, 'r') as file:
+                    config_data = json.load(file)
+                    
+                    # 檢查配置文件格式
+                    app.logger.info(f"配置文件 {filename} 頂級鍵: {list(config_data.keys())}")
+                    
+                    # 從exchange_configs中提取交易所名稱
+                    for config in config_data.get('exchange_configs', []):
+                        if 'exchange_name' in config:
+                            exchange_name = config['exchange_name']
+                            app.logger.info(f"從配置文件中提取交易所名稱: {exchange_name}")
+                            break
+                            
+                    # 確保路徑是絕對路徑
+                    absolute_path = os.path.abspath(file_path)
+                    
+                    config_info = {
+                        "filename": filename,
+                        "path": absolute_path,
+                        "exchange": exchange_name
+                    }
+                    
+                    configs.append(config_info)
+            except Exception as e:
+                app.logger.error(f"讀取配置文件 {filename} 失敗: {str(e)}")
+                app.logger.exception(e)
+    
+    app.logger.info(f"成功讀取 {len(configs)} 個配置文件")
+    app.logger.info(f"找到的配置文件: {configs}")
+    
+    # 確保至少返回一些備用配置
+    if not configs:
+        app.logger.warning("未能讀取到有效的配置文件，使用預設備用")
+        # 手動創建列表作為備用
+        configs = [
+            {
+                "filename": "BingX_api_config2_local.json",
+                "path": os.path.join(config_dir, "BingX_api_config2_local.json"),
+                "exchange": "BingX"
+            },
+            {
+                "filename": "Binance_api_config.json",
+                "path": os.path.join(config_dir, "Binance_api_config.json"),
+                "exchange": "Binance"
+            },
+            {
+                "filename": "OKX_api_config.json",
+                "path": os.path.join(config_dir, "OKX_api_config.json"),
+                "exchange": "OKX"
+            },
+            {
+                "filename": "ByBit_api_config.json",
+                "path": os.path.join(config_dir, "ByBit_api_config.json"),
+                "exchange": "ByBit"
+            }
+        ]
+        
+    return jsonify({"configFiles": configs})
+except Exception as e:
+    app.logger.error(f"獲取交易所配置時出錯: {str(e)}")
+    app.logger.error(traceback.format_exc())
+    return jsonify({"error": str(e), "configFiles": []}), 500
+
+@app.route('/api/exchanges/config', methods=['POST'])
+def create_exchange_config():
+    """創建或更新交易所配置文件"""
+    try:
+        data = request.json
+        exchange_name = data.get('exchange_name')
+        api_key = data.get('api_key', '')
+        secret_key = data.get('secret_key', '')
+        api_url = data.get('api_url', '')
+        config_name = data.get('config_name')
+        
+        if not exchange_name or not config_name:
+            return jsonify({
+                "success": False,
+                "message": "缺少必要參數: exchange_name 或 config_name"
+            }), 400
+        
+        # 創建配置目錄（如果不存在）
+        config_dir = os.path.join(project_root, 'backend', 'api_config')
+        os.makedirs(config_dir, exist_ok=True)
+        
+        # 構建文件名
+        filename = f"{exchange_name}_api_config_{config_name}.json"
+        file_path = os.path.join(config_dir, filename)
+        
+        # 創建配置對象
+        config = {
+            "exchange_configs": [
+                {
+                    "exchange_name": exchange_name,
+                    "api_info": {
+                        "api_url": api_url,
+                        "api_key": api_key,
+                        "secret_key": secret_key
+                    }
+                }
+            ],
+            "database": {
+                "type": "timescaledb",
+                "host": "timescaledb",
+                "port": 5432,
+                "database": "crypto_data",
+                "user": "postgres",
+                "password": "kevin0130"
+            },
+            "trading_pairs": [
+                "BTC-USDT",
+                "ETH-USDT",
+                "BNB-USDT",
+                "ADA-USDT",
+                "SOL-USDT"
+            ],
+            "intervals": ["1m", "5m", "15m", "30m", "1h", "4h", "1d"],
+            "sync_settings": {
+                "default_interval": "1h",
+                "default_limit": 1000,
+                "sleep_time": 1
+            }
+        }
+        
+        # 寫入配置文件
+        with open(file_path, 'w') as f:
+            json.dump(config, f, indent=4)
+        
+        return jsonify({
+            "success": True,
+            "message": f"配置文件 {filename} 已創建",
+            "config_path": file_path
+        })
+        
+    except Exception as e:
+        logger.error(f"創建配置文件時出錯: {str(e)}")
+        return jsonify({
+            "success": False,
+            "message": f"創建配置文件時出錯: {str(e)}"
+        }), 500
+
+# 數據庫連接設定
+def get_db_connection():
+    """
+    獲取數據庫連接
+    """
+    try:
+        # 先嘗試從環境變數獲取連接信息
+        host = os.getenv('DB_HOST')
+        database = os.getenv('DB_NAME')
+        user = os.getenv('DB_USER')
+        password = os.getenv('DB_PASSWORD')
+        port = os.getenv('DB_PORT')
+        
+        # 如果環境變數不存在，嘗試從預設配置文件中讀取
+        if not all([host, database, user, password]):
+            logger.info("從配置文件中讀取數據庫連接信息")
+            config_path = os.path.join(project_root, 'settings', 'database_config.json')
+            if os.path.exists(config_path):
+                with open(config_path, 'r') as f:
+                    db_config = json.load(f)
+                    host = db_config.get('host', 'localhost')
+                    database = db_config.get('database', 'trading_model')
+                    user = db_config.get('user', 'postgres')
+                    password = db_config.get('password', 'postgres')
+                    port = db_config.get('port', '5432')
+        
+        # 使用預設值作為備用
+        host = host or 'localhost'
+        database = database or 'trading_model'
+        user = user or 'postgres'
+        password = password or 'postgres'
+        port = port or '5432'
+        
+        logger.info(f"嘗試連接到數據庫: {host}:{port}/{database}")
+        
+        conn = psycopg2.connect(
+            host=host,
+            database=database,
+            user=user,
+            password=password,
+            port=port
+        )
+        logger.info("數據庫連接成功")
+        return conn
+    except Exception as e:
+        logger.error(f"數據庫連接失敗: {e}")
+        return None
+
+@app.route('/api/kline-data', methods=['GET'])
+def get_kline_data():
+    """
+    獲取K線數據
+    查詢參數:
+    - symbol: 交易對 (例如: BTC-USDT)
+    - interval: 時間間隔 (例如: 1m, 5m, 1h)
+    - start_time: 開始時間 (可選)
+    - end_time: 結束時間 (可選)
+    """
+    try:
+        symbol = request.args.get('symbol', 'BTC-USDT')
+        interval = request.args.get('interval', '1h')
+        start_time = request.args.get('start_time')
+        end_time = request.args.get('end_time')
+        
+        # 默認獲取最近200條數據
+        limit = 200
+        
+        # 連接數據庫
+        conn = get_db_connection()
+        if not conn:
+            return jsonify({
+                'success': False,
+                'message': '無法連接到數據庫',
+                'data': []
+            }), 500
+        
+        # 構建SQL查詢
+        cursor = conn.cursor()
+        
+        # 將symbol格式轉換為數據庫中的格式 (例如: BTC-USDT -> BTCUSDT)
+        db_symbol = symbol.replace('-', '')
+        
+        # 構建基本查詢
+        query = f"""
+        SELECT 
+            time, open_price as open, high_price as high, low_price as low, close_price as close, volume 
+        FROM 
+            kline_data
+        """
+        
+        # 添加過濾條件
+        conditions = ["symbol = %s", "interval = %s"]
+        params = [symbol, interval]
+        
+        if start_time:
+            conditions.append("time >= %s")
+            params.append(start_time)
+        
+        if end_time:
+            conditions.append("time <= %s")
+            params.append(end_time)
+        
+        # 添加WHERE子句
+        query += " WHERE " + " AND ".join(conditions)
+        
+        # 添加排序和限制
+        query += f"""
+        ORDER BY time DESC 
+        LIMIT {limit}
+        """
+        
+        # 執行查詢
+        cursor.execute(query, params)
+        rows = cursor.fetchall()
+        
+        # 轉換為JSON格式
+        data = []
+        for row in rows:
+            data.append({
+                'time': int(row[0].timestamp()),  # 轉換為Unix時間戳
+                'open': float(row[1]),
+                'high': float(row[2]),
+                'low': float(row[3]),
+                'close': float(row[4]),
+                'volume': float(row[5])
+            })
+        
+        # 按時間正序排序
+        data.sort(key=lambda x: x['time'])
+        
+        cursor.close()
+        conn.close()
+        
+        return jsonify({
+            'success': True,
+            'message': '成功獲取K線數據',
+            'data': data
+        })
+    
+    except Exception as e:
+        logger.error(f"獲取K線數據失敗: {e}")
+        # 返回錯誤訊息，不再使用模擬數據
+        return jsonify({
+            'success': False,
+            'message': f'獲取K線數據失敗: {str(e)}',
+            'data': []
+        }), 500
+
+@app.route('/api/market-stats/<symbol>', methods=['GET'])
+def get_market_stats(symbol):
+    """
+    獲取市場統計數據
+    """
+    try:
+        # 連接數據庫
+        conn = get_db_connection()
+        if not conn:
+            return jsonify({
+                'success': False,
+                'message': '無法連接到數據庫',
+                'data': {}
+            }), 500
+        
+        # 將symbol格式轉換為數據庫中的格式
+        db_symbol = symbol.replace('-', '')
+        
+        # 獲取最新價格
+        cursor = conn.cursor()
+        cursor.execute(f"""
+        SELECT close 
+        FROM kline_1h_{db_symbol.lower()} 
+        ORDER BY time DESC 
+        LIMIT 1
+        """)
+        
+        latest_price_row = cursor.fetchone()
+        current_price = float(latest_price_row[0]) if latest_price_row else 0
+        
+        # 獲取24小時前的價格
+        yesterday = datetime.now() - timedelta(days=1)
+        cursor.execute(f"""
+        SELECT close 
+        FROM kline_1h_{db_symbol.lower()} 
+        WHERE time <= %s 
+        ORDER BY time DESC 
+        LIMIT 1
+        """, (yesterday,))
+        
+        yesterday_price_row = cursor.fetchone()
+        yesterday_price = float(yesterday_price_row[0]) if yesterday_price_row else current_price
+        
+        # 計算24小時變化
+        price_change = current_price - yesterday_price
+        price_change_percent = (price_change / yesterday_price * 100) if yesterday_price > 0 else 0
+        
+        # 獲取24小時最高最低價和成交量
+        cursor.execute(f"""
+        SELECT MAX(high), MIN(low), SUM(volume) 
+        FROM kline_1h_{db_symbol.lower()} 
+        WHERE time >= %s
+        """, (yesterday,))
+        
+        stats_row = cursor.fetchone()
+        high_24h = float(stats_row[0]) if stats_row and stats_row[0] else current_price
+        low_24h = float(stats_row[1]) if stats_row and stats_row[1] else current_price
+        volume_24h = float(stats_row[2]) if stats_row and stats_row[2] else 0
+        
+        cursor.close()
+        conn.close()
+        
+        return jsonify({
+            'success': True,
+            'message': '成功獲取市場統計數據',
+            'data': {
+                'currentPrice': current_price,
+                'priceChange24h': price_change,
+                'priceChangePercent24h': price_change_percent,
+                'high24h': high_24h,
+                'low24h': low_24h,
+                'volume24h': volume_24h
+            }
+        })
+    
+    except Exception as e:
+        logger.error(f"獲取市場統計數據失敗: {e}")
+        # 返回錯誤訊息，不再使用模擬數據
+        return jsonify({
+            'success': False,
+            'message': f'獲取市場統計數據失敗: {str(e)}',
+            'data': None
+        }), 500
+
+# 移除了模擬數據生成功能，僅使用實際數據
+
+if __name__ == '__main__':
+    # 加載環境變數
+    load_dotenv()
+    
+    app.run(host='0.0.0.0', port=5000, debug=True)

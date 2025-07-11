@@ -1,0 +1,20 @@
+{
+  "exchange_configs": [
+    {
+      "exchange_name": "OKX",
+      "api_info": {
+        "api_url": "https://www.okx.com",
+        "api_key": "your_okx_api_key_here",
+        "secret_key": "your_okx_secret_key_here",
+        "passphrase": "your_okx_passphrase_here"
+      }
+    }
+  ],
+  "database": {
+    "host": "timescaledb",
+    "port": 5432,
+    "database": "trading_data",
+    "user": "postgres",
+    "password": "postgres"
+  }
+}

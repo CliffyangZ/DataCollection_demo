@@ -1,0 +1,19 @@
+{
+  "exchange_configs": [
+    {
+      "exchange_name": "ByBit",
+      "api_info": {
+        "api_url": "https://api.bybit.com",
+        "api_key": "your_bybit_api_key_here",
+        "secret_key": "your_bybit_secret_key_here"
+      }
+    }
+  ],
+  "database": {
+    "host": "timescaledb",
+    "port": 5432,
+    "database": "trading_data",
+    "user": "postgres",
+    "password": "postgres"
+  }
+}

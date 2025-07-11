@@ -1,0 +1,224 @@
+2025-07-02 13:02:15,353 - import_to_database - INFO - 數據庫連接成功
+2025-07-02 13:02:15,466 - import_to_database - INFO - 數據表創建/檢查完成
+2025-07-02 13:02:15,468 - import_to_database - INFO - K線數據管道初始化完成
+2025-07-02 13:04:09,359 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-02 13:04:09,361 - import_to_database - ERROR - 一般錯誤 [同步K線數據: BTC-USDT]: name 'time' is not defined
+2025-07-02 13:04:25,485 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-02 13:04:25,487 - import_to_database - ERROR - 一般錯誤 [同步K線數據: BTC-USDT]: name 'time' is not defined
+2025-07-02 13:10:58,209 - import_to_database - INFO - 數據庫連接成功
+2025-07-02 13:10:58,223 - import_to_database - INFO - 數據表創建/檢查完成
+2025-07-02 13:10:58,225 - import_to_database - INFO - K線數據管道初始化完成
+2025-07-02 13:10:58,236 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1d
+2025-07-02 13:12:23,832 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1d
+2025-07-02 13:15:31,095 - import_to_database - INFO - 數據庫連接成功
+2025-07-02 13:15:31,114 - import_to_database - INFO - 數據表創建/檢查完成
+2025-07-02 13:15:31,115 - import_to_database - INFO - K線數據管道初始化完成
+2025-07-02 13:15:31,121 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1d
+2025-07-02 13:15:31,450 - import_to_database - ERROR - API錯誤 [獲取K線數據: BTC-USDT]: The request you constructed does not meet the requirements. Please refer to the sample code in the API documentation to construct your request. (https://bingx-api.github.io/docs/#/en-us/swapV2/introduce)
+2025-07-02 13:15:31,451 - import_to_database - ERROR - 獲取K線數據失敗: BTC-USDT
+2025-07-02 13:15:31,471 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-02 13:15:31,638 - import_to_database - WARNING - 數據驗證: 原始 1000 條，過濾後 1 條
+2025-07-02 13:15:31,639 - import_to_database - INFO - 成功獲取 1 條K線數據: BTC-USDT
+2025-07-02 13:15:31,646 - import_to_database - ERROR - 數據庫錯誤 [插入K線數據]: invalid input syntax for type timestamp: "NaT"
+LINE 6:         ) VALUES ('NaT'::timestamp,'BTC-USDT','1h',107202.6,...
+                          ^
+
+2025-07-02 13:23:33,708 - import_to_database - INFO - 數據庫連接成功
+2025-07-02 13:23:33,727 - import_to_database - INFO - 數據表創建/檢查完成
+2025-07-02 13:23:33,727 - import_to_database - INFO - K線數據管道初始化完成
+2025-07-02 13:23:33,732 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1d
+2025-07-02 13:23:34,054 - import_to_database - WARNING - 數據驗證: 原始 30 條，過濾後 1 條
+2025-07-02 13:23:34,055 - import_to_database - INFO - 成功獲取 1 條K線數據: BTC-USDT
+2025-07-02 13:23:34,072 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-02 13:23:34,256 - import_to_database - WARNING - 數據驗證: 原始 1000 條，過濾後 1 條
+2025-07-02 13:23:34,257 - import_to_database - INFO - 成功獲取 1 條K線數據: BTC-USDT
+2025-07-02 13:23:34,265 - import_to_database - ERROR - 數據庫錯誤 [插入K線數據]: invalid input syntax for type timestamp: "NaT"
+LINE 6:         ) VALUES ('NaT'::timestamp,'BTC-USDT','1h',107202.6,...
+                          ^
+
+2025-07-02 17:21:36,826 - import_to_database - INFO - 數據庫連接成功
+2025-07-02 17:21:36,853 - import_to_database - INFO - 數據表創建/檢查完成
+2025-07-02 17:21:36,854 - import_to_database - INFO - K線數據管道初始化完成
+2025-07-02 17:21:36,858 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1d
+2025-07-02 17:21:37,946 - import_to_database - WARNING - 數據驗證: 原始 30 條，過濾後 0 條
+2025-07-02 17:21:37,947 - import_to_database - INFO - 成功獲取 0 條K線數據: BTC-USDT
+2025-07-02 17:21:37,984 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-02 17:21:38,161 - import_to_database - WARNING - 數據驗證: 原始 1000 條，過濾後 0 條
+2025-07-02 17:21:38,162 - import_to_database - INFO - 成功獲取 0 條K線數據: BTC-USDT
+2025-07-02 17:21:38,163 - import_to_database - INFO - 沒有新數據需要同步: BTC-USDT
+2025-07-02 17:23:18,519 - import_to_database - INFO - 數據庫連接成功
+2025-07-02 17:23:18,532 - import_to_database - INFO - 數據表創建/檢查完成
+2025-07-02 17:23:18,533 - import_to_database - INFO - K線數據管道初始化完成
+2025-07-02 17:23:18,536 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1d
+2025-07-02 17:23:18,778 - import_to_database - INFO - 原始數據: 30 條
+2025-07-02 17:23:18,780 - import_to_database - INFO - 時間戳驗證後: 0 條 (過濾 30 條)
+2025-07-02 17:23:18,781 - import_to_database - INFO - 數據範圍 - 開盤價: nan 到 nan
+2025-07-02 17:23:18,781 - import_to_database - INFO - 數據範圍 - 最高價: nan 到 nan
+2025-07-02 17:23:18,782 - import_to_database - INFO - 數據範圍 - 最低價: nan 到 nan
+2025-07-02 17:23:18,782 - import_to_database - INFO - 數據範圍 - 收盤價: nan 到 nan
+2025-07-02 17:23:18,783 - import_to_database - INFO - open > 0 驗證後: 0 條 (過濾 0 條)
+2025-07-02 17:23:18,783 - import_to_database - INFO - high > 0 驗證後: 0 條 (過濾 0 條)
+2025-07-02 17:23:18,784 - import_to_database - INFO - low > 0 驗證後: 0 條 (過濾 0 條)
+2025-07-02 17:23:18,785 - import_to_database - INFO - close > 0 驗證後: 0 條 (過濾 0 條)
+2025-07-02 17:23:18,786 - import_to_database - INFO - 成交量 >= 0 驗證後: 0 條 (過濾 0 條)
+2025-07-02 17:23:18,787 - import_to_database - INFO - 去重後: 0 條 (過濾 0 條)
+2025-07-02 17:23:18,788 - import_to_database - INFO - OHLC邏輯驗證後: 0 條 (過濾 0 條)
+2025-07-02 17:23:18,788 - import_to_database - WARNING - 數據驗證: 原始 30 條，過濾後 0 條
+2025-07-02 17:23:18,790 - import_to_database - INFO - 成功獲取 0 條K線數據: BTC-USDT
+2025-07-02 17:23:18,811 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-02 17:23:18,950 - import_to_database - INFO - 原始數據: 1000 條
+2025-07-02 17:23:18,951 - import_to_database - INFO - 時間戳驗證後: 0 條 (過濾 1000 條)
+2025-07-02 17:23:18,951 - import_to_database - INFO - 數據範圍 - 開盤價: nan 到 nan
+2025-07-02 17:23:18,952 - import_to_database - INFO - 數據範圍 - 最高價: nan 到 nan
+2025-07-02 17:23:18,952 - import_to_database - INFO - 數據範圍 - 最低價: nan 到 nan
+2025-07-02 17:23:18,953 - import_to_database - INFO - 數據範圍 - 收盤價: nan 到 nan
+2025-07-02 17:23:18,954 - import_to_database - INFO - open > 0 驗證後: 0 條 (過濾 0 條)
+2025-07-02 17:23:18,954 - import_to_database - INFO - high > 0 驗證後: 0 條 (過濾 0 條)
+2025-07-02 17:23:18,955 - import_to_database - INFO - low > 0 驗證後: 0 條 (過濾 0 條)
+2025-07-02 17:23:18,955 - import_to_database - INFO - close > 0 驗證後: 0 條 (過濾 0 條)
+2025-07-02 17:23:18,956 - import_to_database - INFO - 成交量 >= 0 驗證後: 0 條 (過濾 0 條)
+2025-07-02 17:23:18,956 - import_to_database - INFO - 去重後: 0 條 (過濾 0 條)
+2025-07-02 17:23:18,957 - import_to_database - INFO - OHLC邏輯驗證後: 0 條 (過濾 0 條)
+2025-07-02 17:23:18,958 - import_to_database - WARNING - 數據驗證: 原始 1000 條，過濾後 0 條
+2025-07-02 17:23:18,958 - import_to_database - INFO - 成功獲取 0 條K線數據: BTC-USDT
+2025-07-02 17:23:18,958 - import_to_database - INFO - 沒有新數據需要同步: BTC-USDT
+2025-07-02 17:29:18,261 - import_to_database - INFO - 數據庫連接成功
+2025-07-02 17:29:18,278 - import_to_database - INFO - 數據表創建/檢查完成
+2025-07-02 17:29:18,278 - import_to_database - INFO - K線數據管道初始化完成
+2025-07-02 17:29:18,282 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1d
+2025-07-02 17:29:18,475 - import_to_database - INFO - 原始數據樣本: {'open': '105639.3', 'close': '107519.0', 'high': '107750.0', 'low': '105054.7', 'volume': '4123.81', 'time': 1751414400000}
+2025-07-02 17:29:18,478 - import_to_database - INFO - 時間戳樣本: [nan, nan, nan]
+2025-07-02 17:29:18,478 - import_to_database - INFO - 時間戳類型: <class 'numpy.float64'>
+2025-07-02 17:29:18,479 - import_to_database - INFO - 轉換後時間戳樣本: [nan, nan, nan]
+2025-07-02 17:29:18,480 - import_to_database - INFO - datetime樣本: [NaT, NaT, NaT]
+2025-07-02 17:29:18,481 - import_to_database - INFO - 原始數據: 30 條
+2025-07-02 17:29:18,483 - import_to_database - INFO - 時間戳驗證後: 0 條 (過濾 30 條)
+2025-07-02 17:29:18,483 - import_to_database - INFO - 數據範圍 - 開盤價: nan 到 nan
+2025-07-02 17:29:18,483 - import_to_database - INFO - 數據範圍 - 最高價: nan 到 nan
+2025-07-02 17:29:18,484 - import_to_database - INFO - 數據範圍 - 最低價: nan 到 nan
+2025-07-02 17:29:18,484 - import_to_database - INFO - 數據範圍 - 收盤價: nan 到 nan
+2025-07-02 17:29:18,485 - import_to_database - INFO - open > 0 驗證後: 0 條 (過濾 0 條)
+2025-07-02 17:29:18,485 - import_to_database - INFO - high > 0 驗證後: 0 條 (過濾 0 條)
+2025-07-02 17:29:18,486 - import_to_database - INFO - low > 0 驗證後: 0 條 (過濾 0 條)
+2025-07-02 17:29:18,486 - import_to_database - INFO - close > 0 驗證後: 0 條 (過濾 0 條)
+2025-07-02 17:29:18,486 - import_to_database - INFO - 成交量 >= 0 驗證後: 0 條 (過濾 0 條)
+2025-07-02 17:29:18,487 - import_to_database - INFO - 去重後: 0 條 (過濾 0 條)
+2025-07-02 17:29:18,488 - import_to_database - INFO - OHLC邏輯驗證後: 0 條 (過濾 0 條)
+2025-07-02 17:29:18,488 - import_to_database - WARNING - 數據驗證: 原始 30 條，過濾後 0 條
+2025-07-02 17:29:18,489 - import_to_database - INFO - 成功獲取 0 條K線數據: BTC-USDT
+2025-07-02 17:29:18,559 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-02 17:29:18,856 - import_to_database - INFO - 原始數據樣本: {'open': '107685.6', 'close': '107519.0', 'high': '107750.0', 'low': '107513.8', 'volume': '181.66', 'time': 1751446800000}
+2025-07-02 17:29:18,858 - import_to_database - INFO - 時間戳樣本: [nan, nan, nan]
+2025-07-02 17:29:18,858 - import_to_database - INFO - 時間戳類型: <class 'numpy.float64'>
+2025-07-02 17:29:18,860 - import_to_database - INFO - 轉換後時間戳樣本: [nan, nan, nan]
+2025-07-02 17:29:18,861 - import_to_database - INFO - datetime樣本: [NaT, NaT, NaT]
+2025-07-02 17:29:18,865 - import_to_database - INFO - 原始數據: 1000 條
+2025-07-02 17:29:18,865 - import_to_database - INFO - 時間戳驗證後: 0 條 (過濾 1000 條)
+2025-07-02 17:29:18,866 - import_to_database - INFO - 數據範圍 - 開盤價: nan 到 nan
+2025-07-02 17:29:18,866 - import_to_database - INFO - 數據範圍 - 最高價: nan 到 nan
+2025-07-02 17:29:18,867 - import_to_database - INFO - 數據範圍 - 最低價: nan 到 nan
+2025-07-02 17:29:18,867 - import_to_database - INFO - 數據範圍 - 收盤價: nan 到 nan
+2025-07-02 17:29:18,868 - import_to_database - INFO - open > 0 驗證後: 0 條 (過濾 0 條)
+2025-07-02 17:29:18,869 - import_to_database - INFO - high > 0 驗證後: 0 條 (過濾 0 條)
+2025-07-02 17:29:18,869 - import_to_database - INFO - low > 0 驗證後: 0 條 (過濾 0 條)
+2025-07-02 17:29:18,870 - import_to_database - INFO - close > 0 驗證後: 0 條 (過濾 0 條)
+2025-07-02 17:29:18,872 - import_to_database - INFO - 成交量 >= 0 驗證後: 0 條 (過濾 0 條)
+2025-07-02 17:29:18,873 - import_to_database - INFO - 去重後: 0 條 (過濾 0 條)
+2025-07-02 17:29:18,873 - import_to_database - INFO - OHLC邏輯驗證後: 0 條 (過濾 0 條)
+2025-07-02 17:29:18,874 - import_to_database - WARNING - 數據驗證: 原始 1000 條，過濾後 0 條
+2025-07-02 17:29:18,874 - import_to_database - INFO - 成功獲取 0 條K線數據: BTC-USDT
+2025-07-02 17:29:18,875 - import_to_database - INFO - 沒有新數據需要同步: BTC-USDT
+2025-07-02 17:33:21,738 - import_to_database - INFO - 數據庫連接成功
+2025-07-02 17:33:21,755 - import_to_database - INFO - 數據表創建/檢查完成
+2025-07-02 17:33:21,755 - import_to_database - INFO - K線數據管道初始化完成
+2025-07-02 17:33:21,759 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1d
+2025-07-02 17:33:21,978 - import_to_database - INFO - 原始數據樣本: {'open': '105639.3', 'close': '107572.6', 'high': '107750.0', 'low': '105054.7', 'volume': '4145.51', 'time': 1751414400000}
+2025-07-02 17:33:21,979 - import_to_database - INFO - 檢測到字典格式數據，進行適配處理
+2025-07-02 17:33:21,983 - import_to_database - INFO - 時間戳樣本: [1751414400000, 1751328000000, 1751241600000]
+2025-07-02 17:33:21,984 - import_to_database - INFO - 時間戳類型: <class 'numpy.int64'>
+2025-07-02 17:33:21,984 - import_to_database - INFO - 轉換後時間戳樣本: [1751414400000, 1751328000000, 1751241600000]
+2025-07-02 17:33:21,986 - import_to_database - INFO - datetime樣本: [Timestamp('2025-07-02 00:00:00'), Timestamp('2025-07-01 00:00:00'), Timestamp('2025-06-30 00:00:00')]
+2025-07-02 17:33:21,988 - import_to_database - INFO - 原始數據: 30 條
+2025-07-02 17:33:21,989 - import_to_database - INFO - 時間戳驗證後: 30 條 (過濾 0 條)
+2025-07-02 17:33:21,990 - import_to_database - INFO - 數據範圍 - 開盤價: 100902.4 到 110233.3
+2025-07-02 17:33:21,990 - import_to_database - INFO - 數據範圍 - 最高價: 103352.8 到 110630.1
+2025-07-02 17:33:21,990 - import_to_database - INFO - 數據範圍 - 最低價: 98133.9 到 108291.5
+2025-07-02 17:33:21,991 - import_to_database - INFO - 數據範圍 - 收盤價: 100902.3 到 110233.3
+2025-07-02 17:33:21,992 - import_to_database - INFO - open > 0 驗證後: 30 條 (過濾 0 條)
+2025-07-02 17:33:21,992 - import_to_database - INFO - high > 0 驗證後: 30 條 (過濾 0 條)
+2025-07-02 17:33:21,992 - import_to_database - INFO - low > 0 驗證後: 30 條 (過濾 0 條)
+2025-07-02 17:33:21,993 - import_to_database - INFO - close > 0 驗證後: 30 條 (過濾 0 條)
+2025-07-02 17:33:21,993 - import_to_database - INFO - 成交量 >= 0 驗證後: 30 條 (過濾 0 條)
+2025-07-02 17:33:21,994 - import_to_database - INFO - 去重後: 30 條 (過濾 0 條)
+2025-07-02 17:33:21,995 - import_to_database - INFO - OHLC邏輯驗證後: 30 條 (過濾 0 條)
+2025-07-02 17:33:21,999 - import_to_database - INFO - 成功獲取 30 條K線數據: BTC-USDT
+2025-07-02 17:33:22,069 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-02 17:33:22,277 - import_to_database - INFO - 原始數據樣本: {'open': '107685.6', 'close': '107572.6', 'high': '107750.0', 'low': '107466.0', 'volume': '203.36', 'time': 1751446800000}
+2025-07-02 17:33:22,278 - import_to_database - INFO - 檢測到字典格式數據，進行適配處理
+2025-07-02 17:33:22,280 - import_to_database - INFO - 時間戳樣本: [1751446800000, 1751443200000, 1751439600000]
+2025-07-02 17:33:22,281 - import_to_database - INFO - 時間戳類型: <class 'numpy.int64'>
+2025-07-02 17:33:22,281 - import_to_database - INFO - 轉換後時間戳樣本: [1751446800000, 1751443200000, 1751439600000]
+2025-07-02 17:33:22,282 - import_to_database - INFO - datetime樣本: [Timestamp('2025-07-02 09:00:00'), Timestamp('2025-07-02 08:00:00'), Timestamp('2025-07-02 07:00:00')]
+2025-07-02 17:33:22,285 - import_to_database - INFO - 原始數據: 1000 條
+2025-07-02 17:33:22,286 - import_to_database - INFO - 時間戳驗證後: 1000 條 (過濾 0 條)
+2025-07-02 17:33:22,287 - import_to_database - INFO - 數據範圍 - 開盤價: 98826.5 到 111738.1
+2025-07-02 17:33:22,287 - import_to_database - INFO - 數據範圍 - 最高價: 99401.9 到 111949.0
+2025-07-02 17:33:22,288 - import_to_database - INFO - 數據範圍 - 最低價: 98133.9 到 111332.5
+2025-07-02 17:33:22,288 - import_to_database - INFO - 數據範圍 - 收盤價: 98826.6 到 111735.0
+2025-07-02 17:33:22,289 - import_to_database - INFO - open > 0 驗證後: 1000 條 (過濾 0 條)
+2025-07-02 17:33:22,290 - import_to_database - INFO - high > 0 驗證後: 1000 條 (過濾 0 條)
+2025-07-02 17:33:22,290 - import_to_database - INFO - low > 0 驗證後: 1000 條 (過濾 0 條)
+2025-07-02 17:33:22,291 - import_to_database - INFO - close > 0 驗證後: 1000 條 (過濾 0 條)
+2025-07-02 17:33:22,291 - import_to_database - INFO - 成交量 >= 0 驗證後: 1000 條 (過濾 0 條)
+2025-07-02 17:33:22,292 - import_to_database - INFO - 去重後: 1000 條 (過濾 0 條)
+2025-07-02 17:33:22,293 - import_to_database - INFO - OHLC邏輯驗證後: 1000 條 (過濾 0 條)
+2025-07-02 17:33:22,294 - import_to_database - INFO - 成功獲取 1000 條K線數據: BTC-USDT
+2025-07-02 17:33:22,547 - import_to_database - INFO - 成功插入 1000 條K線數據
+2025-07-02 17:33:22,547 - import_to_database - INFO - 成功同步K線數據: BTC-USDT 1h (1000 條)
+2025-07-02 17:37:28,689 - import_to_database - INFO - 數據庫連接成功
+2025-07-02 17:37:28,705 - import_to_database - INFO - 數據表創建/檢查完成
+2025-07-02 17:37:28,705 - import_to_database - INFO - K線數據管道初始化完成
+2025-07-02 17:37:28,709 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1d
+2025-07-02 17:37:29,229 - import_to_database - INFO - 成功獲取 30 條K線數據: BTC-USDT
+2025-07-02 17:37:29,332 - import_to_database - INFO - 增量同步從 2025-07-02 09:00:00+00:00 開始
+2025-07-02 17:37:29,333 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-02 17:37:29,521 - import_to_database - INFO - 成功獲取 0 條K線數據: BTC-USDT
+2025-07-02 17:37:29,521 - import_to_database - INFO - 沒有新數據需要同步: BTC-USDT
+2025-07-02 22:21:26,536 - import_to_database - INFO - 數據庫連接成功
+2025-07-02 22:21:26,559 - import_to_database - INFO - 數據表創建/檢查完成
+2025-07-02 22:21:26,559 - import_to_database - INFO - K線數據管道初始化完成
+2025-07-02 22:21:26,563 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1d
+2025-07-02 22:21:28,096 - import_to_database - INFO - 成功獲取 30 條K線數據: BTC-USDT
+2025-07-02 22:21:28,258 - import_to_database - INFO - 增量同步從 2025-07-02 09:00:00+00:00 開始
+2025-07-02 22:21:28,258 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1h
+2025-07-02 22:21:28,426 - import_to_database - INFO - 成功獲取 5 條K線數據: BTC-USDT
+2025-07-02 22:21:28,440 - import_to_database - INFO - 成功插入 5 條K線數據
+2025-07-02 22:21:28,440 - import_to_database - INFO - 成功同步K線數據: BTC-USDT 1h (5 條)
+2025-07-02 22:22:07,994 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1d
+2025-07-02 22:22:08,256 - import_to_database - INFO - 成功獲取 31 條K線數據: BTC-USDT
+2025-07-02 22:22:30,557 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1d
+2025-07-02 22:22:30,754 - import_to_database - INFO - 成功獲取 31 條K線數據: BTC-USDT
+2025-07-02 22:22:41,751 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1d
+2025-07-02 22:22:41,903 - import_to_database - INFO - 成功獲取 31 條K線數據: BTC-USDT
+2025-07-02 22:22:55,562 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1d
+2025-07-02 22:22:55,719 - import_to_database - INFO - 成功獲取 0 條K線數據: BTC-USDT
+2025-07-02 22:23:14,557 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1d
+2025-07-02 22:23:14,704 - import_to_database - INFO - 成功獲取 31 條K線數據: BTC-USDT
+2025-07-02 22:23:22,976 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1d
+2025-07-02 22:23:23,105 - import_to_database - INFO - 成功獲取 0 條K線數據: BTC-USDT
+2025-07-02 22:47:11,232 - import_to_database - INFO - 數據庫連接成功
+2025-07-02 22:47:11,262 - import_to_database - INFO - 數據表創建/檢查完成
+2025-07-02 22:47:11,262 - import_to_database - INFO - K線數據管道初始化完成
+2025-07-02 22:50:55,369 - import_to_database - ERROR - API錯誤 [獲取K線數據: BTC-USDT]: The request you constructed does not meet the requirements. Please refer to the sample code in the API documentation to construct your request. (https://bingx-api.github.io/docs/#/en-us/swapV2/introduce)
+2025-07-02 22:52:36,856 - import_to_database - ERROR - API錯誤 [獲取K線數據: BTC_USDT]: The request you constructed does not meet the requirements. Please refer to the sample code in the API documentation to construct your request. (https://bingx-api.github.io/docs/#/en-us/swapV2/introduce)
+2025-07-02 22:52:39,831 - import_to_database - ERROR - API錯誤 [獲取K線數據: BTCUSDT]: The request you constructed does not meet the requirements. Please refer to the sample code in the API documentation to construct your request. (https://bingx-api.github.io/docs/#/en-us/swapV2/introduce)
+2025-07-02 22:52:43,517 - import_to_database - ERROR - API錯誤 [獲取K線數據: BT-CUSDT]: The request you constructed does not meet the requirements. Please refer to the sample code in the API documentation to construct your request. (https://bingx-api.github.io/docs/#/en-us/swapV2/introduce)
+2025-07-02 22:56:28,532 - import_to_database - INFO - 開始獲取K線數據: BTC-USDT 1d
+2025-07-02 22:56:28,862 - import_to_database - INFO - 成功獲取 31 條K線數據: BTC-USDT
+2025-07-02 22:59:15,837 - import_to_database - ERROR - API錯誤 [獲取K線數據: BTC-USDT]: The request you constructed does not meet the requirements. Please refer to the sample code in the API documentation to construct your request. (https://bingx-api.github.io/docs/#/en-us/swapV2/introduce)
+2025-07-02 22:59:59,812 - import_to_database - ERROR - API錯誤 [獲取K線數據: BTC-USDT]: The request you constructed does not meet the requirements. Please refer to the sample code in the API documentation to construct your request. (https://bingx-api.github.io/docs/#/en-us/swapV2/introduce)
+2025-07-02 23:05:18,882 - import_to_database - ERROR - API錯誤 [獲取K線數據: BTC-USDT]: The request you constructed does not meet the requirements. Please refer to the sample code in the API documentation to construct your request. (https://bingx-api.github.io/docs/#/en-us/swapV2/introduce)
+2025-07-02 23:05:29,468 - import_to_database - ERROR - API錯誤 [獲取K線數據: BTC-USDT]: The request you constructed does not meet the requirements. Please refer to the sample code in the API documentation to construct your request. (https://bingx-api.github.io/docs/#/en-us/swapV2/introduce)
+2025-07-02 23:27:48,886 - import_to_database - INFO - 數據庫連接成功
+2025-07-02 23:27:48,900 - import_to_database - INFO - 數據表創建/檢查完成
+2025-07-02 23:27:48,901 - import_to_database - INFO - K線數據管道初始化完成

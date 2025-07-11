@@ -1,0 +1,84 @@
+
+services:
+  # PostgreSQL with TimescaleDB
+  timescaledb:
+    image: timescale/timescaledb:latest-pg14
+    container_name: timescaledb-TradingModel_V3
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: DB_PASSWORD #請自行修改為自己的密碼
+      POSTGRES_DB: crypto_data
+    ports:
+      - "5432:5432"
+    volumes:
+      -  #持久化儲存 本機:容器
+    networks:
+      - postgres_network
+
+  # pgAdmin
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 
+      PGADMIN_DEFAULT_PASSWORD: #請自行修改為自己的帳號密碼
+      PGADMIN_CONFIG_SERVER_MODE: 'False' #單人模式，只讓一個使用者登入
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - postgres_network
+    depends_on:
+      - timescaledb
+
+  # Backend API Service
+  backend_api:
+    build:
+      context: ./backend/api
+      dockerfile: Dockerfile
+    container_name: backend-api
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend/api:/app
+    environment:
+      - DB_HOST=timescaledb
+      - DB_NAME=crypto_data
+      - DB_USER=postgres
+      - DB_PASSWORD=password #請自行修改為自己的密碼
+      - DB_PORT=5432
+    networks:
+      - postgres_network
+      - app_network
+    depends_on:
+      - timescaledb
+
+  # Frontend Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    restart: always
+    ports:
+      - "3000:80"
+    volumes:
+      - ./frontend:/app
+    networks:
+      - app_network
+    depends_on:
+      - backend_api
+
+networks:
+  postgres_network:
+    driver: bridge
+  app_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  pgadmin_data:
