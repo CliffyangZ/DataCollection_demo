@@ -1,4 +1,4 @@
-# TradingBot_V3 Backend
+# Backend
 
 本目錄為 TradingBot_V3 的後端服務，負責數據收集、API 提供、數據庫管理等核心功能。
 
@@ -51,6 +51,3 @@ source venv/bin/activate
 pip install -r requirements.txt
 uvicorn api.app:app --reload --host 0.0.0.0 --port 5000
 ```
-
-## 聯絡與貢獻
-如需協助或想參與開發，請提交 Issue 或 Pull Request。
